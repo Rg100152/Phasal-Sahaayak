@@ -1,0 +1,1296 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phasal Sahaayak · Crop Helper</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@300;400;600;700&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* ===== RESET & GLOBAL ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-dark: #0B3C5D;
+            --primary-green: #1B5E20;
+            --primary-gold: #F4B41A;
+            --primary-red: #D32F2F;
+            --bg-light: #F4F7F6;
+            --white: #FFFFFF;
+            --text-dark: #1A1A1A;
+            --text-muted: #555555;
+            --shadow: 0 4px 20px rgba(0,0,0,0.08);
+            --border-radius: 12px;
+            --transition: 0.3s ease;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Noto Sans Devanagari', 'Poppins', sans-serif;
+            background: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* ===== TOP BANNER (Tricolor) ===== */
+        .top-banner {
+            background: linear-gradient(to right, #FF9933 0%, #FF9933 33%, #FFFFFF 33%, #FFFFFF 66%, #138808 66%, #138808 100%);
+            height: 6px;
+            width: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+        }
+
+        /* ===== HEADER ===== */
+        .header {
+            position: fixed;
+            top: 6px;
+            left: 0;
+            right: 0;
+            background: var(--primary-dark);
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 999;
+            flex-wrap: wrap;
+            gap: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        .header-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--white);
+            text-decoration: none;
+        }
+
+        .header-logo img {
+            height: 40px;
+            width: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--primary-gold);
+        }
+
+        .header-logo h1 {
+            font-size: 20px;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .header-logo span {
+            font-size: 12px;
+            opacity: 0.8;
+            font-weight: 300;
+            display: block;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .lang-switch {
+            display: flex;
+            gap: 4px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 30px;
+            padding: 4px;
+        }
+
+        .lang-btn {
+            background: transparent;
+            border: none;
+            color: rgba(255,255,255,0.6);
+            padding: 6px 14px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 600;
+            transition: var(--transition);
+            font-family: inherit;
+        }
+
+        .lang-btn.active {
+            background: var(--primary-gold);
+            color: var(--primary-dark);
+        }
+
+        .lang-btn:hover {
+            color: var(--white);
+        }
+
+        .btn-download {
+            background: var(--primary-gold);
+            color: var(--primary-dark);
+            border: none;
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-weight: 700;
+            cursor: pointer;
+            font-size: 14px;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-family: inherit;
+        }
+
+        .btn-download:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(244, 180, 26, 0.4);
+        }
+
+        /* ===== MAIN CONTAINER ===== */
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 80px 20px 20px 20px;
+        }
+
+        /* ===== HERO SECTION ===== */
+        .hero {
+            border-radius: var(--border-radius);
+            padding: 0;
+            display: flex;
+            align-items: stretch;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 0;
+            margin-bottom: 30px;
+            position: relative;
+            overflow: hidden;
+            min-height: 380px;
+            background: var(--primary-dark);
+            box-shadow: var(--shadow);
+        }
+
+        .hero-content {
+            flex: 1;
+            min-width: 280px;
+            padding: 50px 40px;
+            position: relative;
+            z-index: 2;
+            background: linear-gradient(135deg, rgba(11, 60, 93, 0.92), rgba(11, 60, 93, 0.7));
+        }
+
+        .hero-content h2 {
+            color: var(--white);
+            font-size: 36px;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 12px;
+        }
+
+        .hero-content h2 .highlight {
+            color: var(--primary-gold);
+        }
+
+        .hero-content p {
+            color: rgba(255,255,255,0.85);
+            font-size: 18px;
+            margin-bottom: 20px;
+            max-width: 500px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .hero-buttons .btn-primary {
+            background: var(--primary-gold);
+            color: var(--primary-dark);
+            border: none;
+            padding: 12px 28px;
+            border-radius: 30px;
+            font-weight: 700;
+            font-size: 16px;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-family: inherit;
+        }
+
+        .hero-buttons .btn-primary:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 20px rgba(244, 180, 26, 0.4);
+        }
+
+        .hero-buttons .btn-secondary {
+            background: rgba(255,255,255,0.15);
+            color: var(--white);
+            border: 2px solid rgba(255,255,255,0.3);
+            padding: 12px 28px;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: inherit;
+        }
+
+        .hero-buttons .btn-secondary:hover {
+            background: rgba(255,255,255,0.25);
+        }
+
+        .hero-image {
+            flex: 0 0 45%;
+            min-height: 320px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ===== QUICK ACTION DASHBOARD ===== */
+        .section-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary-dark);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .section-title i {
+            color: var(--primary-gold);
+        }
+
+        .quick-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 16px;
+            margin-bottom: 30px;
+        }
+
+        .quick-card {
+            background: var(--white);
+            border-radius: var(--border-radius);
+            padding: 20px 16px;
+            text-align: center;
+            box-shadow: var(--shadow);
+            cursor: pointer;
+            transition: var(--transition);
+            border: 2px solid transparent;
+            text-decoration: none;
+            color: var(--text-dark);
+            display: block;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .quick-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-size: cover;
+            background-position: center;
+            opacity: 0.08;
+            z-index: 0;
+            transition: var(--transition);
+        }
+
+        .quick-card:hover::before {
+            opacity: 0.15;
+        }
+
+        .quick-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+            border-color: var(--primary-gold);
+        }
+
+        .quick-card .icon {
+            font-size: 36px;
+            display: block;
+            margin-bottom: 8px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .quick-card .label {
+            font-size: 14px;
+            font-weight: 600;
+            position: relative;
+            z-index: 1;
+        }
+
+        .quick-card .sub {
+            font-size: 12px;
+            color: var(--text-muted);
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ===== MAIN DASHBOARD ===== */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 24px;
+            margin-bottom: 30px;
+        }
+
+        @media (max-width: 992px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+            .hero-image {
+                flex: 0 0 200px;
+                min-height: 200px;
+                width: 100%;
+            }
+            .hero {
+                flex-direction: column;
+            }
+            .hero-content {
+                padding: 30px 20px;
+            }
+        }
+
+        /* ===== MANDI PRICE TABLE ===== */
+        .card {
+            background: var(--white);
+            border-radius: var(--border-radius);
+            padding: 24px;
+            box-shadow: var(--shadow);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .card-header h3 {
+            font-size: 18px;
+            color: var(--primary-dark);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card-header h3 i {
+            color: var(--primary-gold);
+        }
+
+        .card-header .badge {
+            background: #e8f5e9;
+            color: var(--primary-green);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+        }
+
+        table th {
+            background: #f0f4f3;
+            color: var(--primary-dark);
+            padding: 12px 10px;
+            text-align: left;
+            font-weight: 600;
+            border-bottom: 2px solid #e0e7e5;
+        }
+
+        table td {
+            padding: 10px;
+            border-bottom: 1px solid #eef3f2;
+        }
+
+        table tr:hover td {
+            background: #f8faf9;
+        }
+
+        .price-up {
+            color: #27ae60;
+            font-weight: 600;
+        }
+
+        .price-down {
+            color: #e74c3c;
+            font-weight: 600;
+        }
+
+        .table-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 16px;
+            flex-wrap: wrap;
+        }
+
+        .table-actions button {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 13px;
+            transition: var(--transition);
+            font-family: inherit;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn-pdf {
+            background: #e74c3c;
+            color: var(--white);
+        }
+
+        .btn-pdf:hover {
+            background: #c0392b;
+        }
+
+        .btn-print {
+            background: #2c3e50;
+            color: var(--white);
+        }
+
+        .btn-print:hover {
+            background: #1a252f;
+        }
+
+        /* ===== AI CROP DOCTOR ===== */
+        .crop-doctor {
+            text-align: center;
+        }
+
+        .crop-doctor .upload-area {
+            border: 2px dashed #bdc3c7;
+            border-radius: var(--border-radius);
+            padding: 30px 20px;
+            cursor: pointer;
+            transition: var(--transition);
+            background: #fafcfb;
+            margin: 12px 0;
+            position: relative;
+            overflow: hidden;
+            min-height: 180px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .crop-doctor .upload-area .bg-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-size: cover;
+            background-position: center;
+            opacity: 0.06;
+            z-index: 0;
+        }
+
+        .crop-doctor .upload-area:hover {
+            border-color: var(--primary-gold);
+            background: #fefcf5;
+        }
+
+        .crop-doctor .upload-area > * {
+            position: relative;
+            z-index: 1;
+        }
+
+        .crop-doctor .upload-area i {
+            font-size: 48px;
+            color: #95a5a6;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .crop-doctor .upload-area p {
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+
+        .crop-doctor .upload-area .file-input {
+            display: none;
+        }
+
+        .diagnosis-result {
+            margin-top: 16px;
+            padding: 16px;
+            border-radius: var(--border-radius);
+            background: #e8f5e9;
+            display: none;
+            text-align: left;
+        }
+
+        .diagnosis-result.show {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .diagnosis-result h4 {
+            color: var(--primary-green);
+            margin-bottom: 6px;
+        }
+
+        .diagnosis-result p {
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+
+        /* ===== NOTICE BOARD ===== */
+        .notice-board {
+            background: #fff8e1;
+            border-left: 4px solid var(--primary-gold);
+            padding: 12px 16px;
+            border-radius: 4px;
+            margin-top: 16px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .notice-board .bg-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-size: cover;
+            background-position: center;
+            opacity: 0.05;
+            z-index: 0;
+        }
+
+        .notice-board .marquee {
+            font-size: 14px;
+            color: var(--text-dark);
+            position: relative;
+            z-index: 1;
+        }
+
+        .notice-board .marquee i {
+            color: var(--primary-gold);
+            margin-right: 8px;
+        }
+
+        /* ===== GOVERNMENT SCHEMES ===== */
+        .schemes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin-top: 16px;
+        }
+
+        .scheme-card {
+            background: var(--white);
+            border-radius: var(--border-radius);
+            padding: 20px;
+            text-align: center;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            border-top: 4px solid var(--primary-gold);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .scheme-card .bg-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-size: cover;
+            background-position: center;
+            opacity: 0.04;
+            z-index: 0;
+        }
+
+        .scheme-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+
+        .scheme-card .icon {
+            font-size: 32px;
+            display: block;
+            margin-bottom: 8px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .scheme-card h4 {
+            font-size: 15px;
+            color: var(--primary-dark);
+            margin-bottom: 4px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .scheme-card p {
+            font-size: 13px;
+            color: var(--text-muted);
+            position: relative;
+            z-index: 1;
+        }
+
+        .scheme-card .btn-scheme {
+            margin-top: 10px;
+            padding: 6px 16px;
+            background: var(--primary-dark);
+            color: var(--white);
+            border: none;
+            border-radius: 20px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: inherit;
+            position: relative;
+            z-index: 1;
+        }
+
+        .scheme-card .btn-scheme:hover {
+            background: var(--primary-gold);
+            color: var(--primary-dark);
+        }
+
+        /* ===== STOCK IMAGE GALLERY ===== */
+        .image-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 12px;
+            margin: 20px 0 10px 0;
+        }
+
+        .image-gallery img {
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 8px;
+            border: 2px solid #e0e7e5;
+            transition: var(--transition);
+        }
+
+        .image-gallery img:hover {
+            transform: scale(1.04);
+            border-color: var(--primary-gold);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+        }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            background: var(--primary-dark);
+            color: rgba(255,255,255,0.8);
+            padding: 30px 20px;
+            margin-top: 30px;
+            border-radius: var(--border-radius) var(--border-radius) 0 0;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 24px;
+            max-width: 1280px;
+            margin: 0 auto;
+        }
+
+        .footer h4 {
+            color: var(--white);
+            margin-bottom: 12px;
+            font-size: 16px;
+        }
+
+        .footer ul {
+            list-style: none;
+        }
+
+        .footer ul li {
+            margin-bottom: 6px;
+            font-size: 14px;
+        }
+
+        .footer ul li i {
+            margin-right: 8px;
+            color: var(--primary-gold);
+        }
+
+        .footer .helpline {
+            background: rgba(244, 180, 26, 0.15);
+            padding: 12px 16px;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--primary-gold);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            margin-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            font-size: 13px;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .header {
+                padding: 8px 12px;
+            }
+            .header-logo h1 {
+                font-size: 16px;
+            }
+            .header-logo span {
+                font-size: 10px;
+            }
+            .hero-content h2 {
+                font-size: 26px;
+            }
+            .hero-buttons {
+                justify-content: center;
+            }
+            .quick-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+            .container {
+                padding: 70px 12px 12px 12px;
+            }
+            .hero-image {
+                flex: 0 0 180px;
+                min-height: 180px;
+            }
+            .image-gallery {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            .image-gallery img {
+                height: 90px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .quick-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
+            }
+            .quick-card {
+                padding: 14px 10px;
+            }
+            .quick-card .icon {
+                font-size: 28px;
+            }
+            .quick-card .label {
+                font-size: 12px;
+            }
+            .hero-content h2 {
+                font-size: 22px;
+            }
+            .hero-buttons .btn-primary,
+            .hero-buttons .btn-secondary {
+                padding: 10px 18px;
+                font-size: 14px;
+            }
+            .lang-btn {
+                padding: 4px 10px;
+                font-size: 11px;
+            }
+            .btn-download {
+                padding: 6px 14px;
+                font-size: 12px;
+            }
+            .image-gallery {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .image-gallery img {
+                height: 80px;
+            }
+        }
+
+        /* ===== ANIMATIONS ===== */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ===== BOTTOM NAV (Mobile) ===== */
+        .bottom-nav {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--white);
+            border-top: 1px solid #e0e0e0;
+            padding: 8px 0;
+            z-index: 999;
+            justify-content: space-around;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.08);
+        }
+
+        .bottom-nav a {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-size: 11px;
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: var(--transition);
+            gap: 2px;
+        }
+
+        .bottom-nav a i {
+            font-size: 20px;
+        }
+
+        .bottom-nav a.active {
+            color: var(--primary-gold);
+        }
+
+        @media (max-width: 600px) {
+            .bottom-nav {
+                display: flex;
+            }
+            .container {
+                padding-bottom: 70px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ===== TOP BANNER ===== -->
+<div class="top-banner"></div>
+
+<!-- ===== HEADER ===== -->
+<header class="header">
+    <a href="#" class="header-logo">
+        <img src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="Logo">
+        <div>
+            <h1>Phasal Sahaayak</h1>
+            <span>🌾 Crop Helper · Government Portal</span>
+        </div>
+    </a>
+    <div class="header-actions">
+        <div class="lang-switch">
+            <button class="lang-btn active" onclick="changeLanguage('hi')">हिंदी</button>
+            <button class="lang-btn" onclick="changeLanguage('en')">English</button>
+        </div>
+        <button class="btn-download" onclick="alert('📱 App download link coming soon!')">
+            <i class="fas fa-download"></i> Download App
+        </button>
+    </div>
+</header>
+
+<!-- ===== MAIN CONTAINER ===== -->
+<div class="container">
+
+    <!-- ===== HERO SECTION with STOCK IMAGE ===== -->
+    <section class="hero">
+        <div class="hero-content">
+            <h2>आपकी फसल का <span class="highlight">सच्चा साथी</span></h2>
+            <p>मौसम, मंडी भाव, फसल रोग और सरकारी योजनाओं की रियल-टाइम जानकारी अब आपके मोबाइल पर</p>
+            <div class="hero-buttons">
+                <button class="btn-primary" onclick="alert('📱 App download link coming soon!')">
+                    <i class="fas fa-google-play"></i> ऐप डाउनलोड करें
+                </button>
+                <button class="btn-secondary" onclick="document.getElementById('features').scrollIntoView({behavior:'smooth'})">
+                    <i class="fas fa-arrow-right"></i> सुविधाएँ देखें
+                </button>
+            </div>
+        </div>
+        <div class="hero-image" style="background-image: url('https://images.unsplash.com/photo-1500382017468-9049fed747ef?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');"></div>
+    </section>
+
+    <!-- ===== QUICK ACTION GRID with STOCK IMAGES ===== -->
+    <div class="section-title" id="features">
+        <i class="fas fa-th-large"></i> मुख्य सेवाएँ
+    </div>
+    <div class="quick-grid">
+        <div class="quick-card" onclick="alert('🌤️ 7-day weather forecast for your district')" style="background-image: url('https://images.unsplash.com/photo-1504384308090-c894fdcc538d?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80'); background-size: cover; background-position: center; color: white; text-shadow: 0 2px 8px rgba(0,0,0,0.6);">
+            <span class="icon">🌤️</span>
+            <div class="label">मौसम</div>
+            <div class="sub">7 दिन का पूर्वानुमान</div>
+        </div>
+        <div class="quick-card" onclick="document.getElementById('mandi').scrollIntoView({behavior:'smooth'})" style="background-image: url('https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80'); background-size: cover; background-position: center; color: white; text-shadow: 0 2px 8px rgba(0,0,0,0.6);">
+            <span class="icon">🌾</span>
+            <div class="label">मंडी भाव</div>
+            <div class="sub">ताज़ा दरें</div>
+        </div>
+        <div class="quick-card" onclick="document.getElementById('crop-doctor').scrollIntoView({behavior:'smooth'})" style="background-image: url('https://images.unsplash.com/photo-1523348837708-15d4a09cfac2?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80'); background-size: cover; background-position: center; color: white; text-shadow: 0 2px 8px rgba(0,0,0,0.6);">
+            <span class="icon">🩺</span>
+            <div class="label">फसल डॉक्टर</div>
+            <div class="sub">AI Diagnosis</div>
+        </div>
+        <div class="quick-card" onclick="document.getElementById('schemes').scrollIntoView({behavior:'smooth'})" style="background-image: url('https://images.unsplash.com/photo-1560472354-b33ff0c44a43?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80'); background-size: cover; background-position: center; color: white; text-shadow: 0 2px 8px rgba(0,0,0,0.6);">
+            <span class="icon">📜</span>
+            <div class="label">सरकारी योजनाएं</div>
+            <div class="sub">सब्सिडी & योजनाएँ</div>
+        </div>
+        <div class="quick-card" onclick="alert('📅 Crop calendar - sowing to harvest guide')" style="background-image: url('https://images.unsplash.com/photo-1464226184884-fa280b87c399?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80'); background-size: cover; background-position: center; color: white; text-shadow: 0 2px 8px rgba(0,0,0,0.6);">
+            <span class="icon">📅</span>
+            <div class="label">फसल कैलेंडर</div>
+            <div class="sub">बुआई से कटाई तक</div>
+        </div>
+        <div class="quick-card" onclick="alert('🧑‍🔬 Connect with an expert on WhatsApp')" style="background-image: url('https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80'); background-size: cover; background-position: center; color: white; text-shadow: 0 2px 8px rgba(0,0,0,0.6);">
+            <span class="icon">🧑‍🔬</span>
+            <div class="label">विशेषज्ञ सलाह</div>
+            <div class="sub">WhatsApp चैट</div>
+        </div>
+    </div>
+
+    <!-- ===== STOCK IMAGE GALLERY (20 Images) ===== -->
+    <div class="image-gallery">
+        <img src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="Farm">
+        <img src="https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="Crops">
+        <img src="https://images.unsplash.com/photo-1523348837708-15d4a09cfac2?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="Agriculture">
+        <img src="https://images.unsplash.com/photo-1560472354-b33ff0c44a43?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="Farming">
+        <img src="https://images.unsplash.com/photo-1464226184884-fa280b87c399?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="Harvest">
+        <img src="https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="Tractor">
+        <img src="https://images.unsplash.com/photo-1500937386664-56d1dfef3854?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="Field">
+        <img src="https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="Sunrise">
+        <img src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="Green">
+        <img src="https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="Wheat">
+        <img src="https://images.unsplash.com/photo-1523348837708-15d4a09cfac2?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="Leaves">
+        <img src="https://images.unsplash.com/photo-1560472354-b33ff0c44a43?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="Soil">
+        <img src="https://images.unsplash.com/photo-1464226184884-fa280b87c399?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="Harvest2">
+        <img src="https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="Farm2">
+        <img src="https://images.unsplash.com/photo-1500937386664-56d1dfef3854?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="Field2">
+        <img src="https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="Sunset">
+        <img src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="Nature">
+        <img src="https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="Grain">
+        <img src="https://images.unsplash.com/photo-1523348837708-15d4a09cfac2?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="Green2">
+        <img src="https://images.unsplash.com/photo-1560472354-b33ff0c44a43?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="Plant">
+    </div>
+
+    <!-- ===== DASHBOARD GRID ===== -->
+    <div class="dashboard-grid">
+
+        <!-- ===== MANDI PRICES ===== -->
+        <div class="card" id="mandi">
+            <div class="card-header">
+                <h3><i class="fas fa-chart-line"></i> लाइव मंडी भाव</h3>
+                <span class="badge"><i class="fas fa-sync-alt"></i> Live Update</span>
+            </div>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>फसल</th>
+                            <th>मंडी</th>
+                            <th>न्यूनतम (₹)</th>
+                            <th>अधिकतम (₹)</th>
+                            <th>बदलाव</th>
+                        </tr>
+                    </thead>
+                    <tbody id="mandiTable">
+                        <tr>
+                            <td>🌾 गेहूँ</td>
+                            <td>जौनपुर</td>
+                            <td>2,350</td>
+                            <td>2,480</td>
+                            <td class="price-up"><i class="fas fa-arrow-up"></i> +2.4%</td>
+                        </tr>
+                        <tr>
+                            <td>🌽 मक्का</td>
+                            <td>वाराणसी</td>
+                            <td>2,100</td>
+                            <td>2,200</td>
+                            <td class="price-up"><i class="fas fa-arrow-up"></i> +1.2%</td>
+                        </tr>
+                        <tr>
+                            <td>🍚 धान</td>
+                            <td>गोरखपुर</td>
+                            <td>1,850</td>
+                            <td>1,920</td>
+                            <td class="price-down"><i class="fas fa-arrow-down"></i> -0.8%</td>
+                        </tr>
+                        <tr>
+                            <td>🫘 चना</td>
+                            <td>लखनऊ</td>
+                            <td>4,200</td>
+                            <td>4,400</td>
+                            <td class="price-up"><i class="fas fa-arrow-up"></i> +3.1%</td>
+                        </tr>
+                        <tr>
+                            <td>🌻 सरसों</td>
+                            <td>कानपुर</td>
+                            <td>5,500</td>
+                            <td>5,800</td>
+                            <td class="price-up"><i class="fas fa-arrow-up"></i> +1.8%</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="table-actions">
+                <button class="btn-pdf" onclick="alert('📄 PDF report is being generated...')">
+                    <i class="fas fa-file-pdf"></i> PDF डाउनलोड
+                </button>
+                <button class="btn-print" onclick="window.print()">
+                    <i class="fas fa-print"></i> प्रिंट करें
+                </button>
+            </div>
+        </div>
+
+        <!-- ===== AI CROP DOCTOR ===== -->
+        <div class="card crop-doctor" id="crop-doctor">
+            <div class="card-header">
+                <h3><i class="fas fa-robot"></i> फसल डॉक्टर (AI)</h3>
+                <span class="badge"><i class="fas fa-microchip"></i> AI Powered</span>
+            </div>
+            <p style="font-size:14px; color:var(--text-muted);">बीमार पत्ती की फोटो अपलोड करें, AI तुरंत रोग पहचानेगा</p>
+            <div class="upload-area" id="uploadArea" onclick="document.getElementById('fileInput').click()">
+                <div class="bg-image" style="background-image: url('https://images.unsplash.com/photo-1523348837708-15d4a09cfac2?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80');"></div>
+                <i class="fas fa-cloud-upload-alt"></i>
+                <p>📷 फोटो अपलोड करें (जेपीजी, पीएनजी)</p>
+                <p style="font-size:12px; color:#bbb;">अधिकतम 5MB</p>
+                <input type="file" id="fileInput" class="file-input" accept="image/*" onchange="handleFileUpload(event)">
+            </div>
+            <div class="diagnosis-result" id="diagnosisResult">
+                <h4><i class="fas fa-check-circle"></i> निदान परिणाम</h4>
+                <p id="diagnosisText">✅ रोग: लीफ ब्लाइट<br>💊 अनुशंसित: कॉपर ऑक्सीक्लोराइड 3 ग्राम/लीटर</p>
+            </div>
+            <div class="notice-board">
+                <div class="bg-image" style="background-image: url('https://images.unsplash.com/photo-1560472354-b33ff0c44a43?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80');"></div>
+                <div class="marquee">
+                    <i class="fas fa-bullhorn"></i>
+                    <span id="noticeText">नई घोषणा: PM-KISAN 18वीं किस्त जारी | 3,000+ किसान लाभान्वित</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== GOVERNMENT SCHEMES ===== -->
+    <div class="section-title" id="schemes">
+        <i class="fas fa-gavel"></i> सरकारी योजनाएँ & सब्सिडी
+    </div>
+    <div class="schemes-grid">
+        <div class="scheme-card">
+            <div class="bg-image" style="background-image: url('https://images.unsplash.com/photo-1560472354-b33ff0c44a43?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80');"></div>
+            <span class="icon">💰</span>
+            <h4>PM-KISAN सम्मान निधि</h4>
+            <p>₹6,000/वर्ष • 3 किस्तें</p>
+            <button class="btn-scheme" onclick="alert('🔗 Redirecting to PM-KISAN portal...')">आवेदन करें</button>
+        </div>
+        <div class="scheme-card">
+            <div class="bg-image" style="background-image: url('https://images.unsplash.com/photo-1500382017468-9049fed747ef?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80');"></div>
+            <span class="icon">🛡️</span>
+            <h4>फसल बीमा योजना</h4>
+            <p>प्रीमियम में 50% सब्सिडी</p>
+            <button class="btn-scheme" onclick="alert('🔗 Redirecting to Crop Insurance portal...')">आवेदन करें</button>
+        </div>
+        <div class="scheme-card">
+            <div class="bg-image" style="background-image: url('https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80');"></div>
+            <span class="icon">🧪</span>
+            <h4>सॉयल हेल्थ कार्ड</h4>
+            <p>मिट्टी जांच • मुफ्त रिपोर्ट</p>
+            <button class="btn-scheme" onclick="alert('🔗 Redirecting to Soil Health Card portal...')">आवेदन करें</button>
+        </div>
+        <div class="scheme-card">
+            <div class="bg-image" style="background-image: url('https://images.unsplash.com/photo-1464226184884-fa280b87c399?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80');"></div>
+            <span class="icon">💧</span>
+            <h4>प्रधानमंत्री सिंचाई</h4>
+            <p>ड्रिप सिंचाई • 60% सब्सिडी</p>
+            <button class="btn-scheme" onclick="alert('🔗 Redirecting to Irrigation scheme portal...')">आवेदन करें</button>
+        </div>
+    </div>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="footer">
+        <div class="footer-grid">
+            <div>
+                <h4><i class="fas fa-seedling" style="color:var(--primary-gold);"></i> Phasal Sahaayak</h4>
+                <ul>
+                    <li><i class="fas fa-check-circle"></i> Digital Agriculture Platform</li>
+                    <li><i class="fas fa-check-circle"></i> Government Verified</li>
+                    <li><i class="fas fa-check-circle"></i> Made in India</li>
+                </ul>
+            </div>
+            <div>
+                <h4>मुख्य सेवाएँ</h4>
+                <ul>
+                    <li>🌤️ मौसम पूर्वानुमान</li>
+                    <li>🌾 मंडी भाव</li>
+                    <li>🩺 फसल डॉक्टर (AI)</li>
+                    <li>📜 सरकारी योजनाएँ</li>
+                </ul>
+            </div>
+            <div>
+                <h4>महत्वपूर्ण लिंक</h4>
+                <ul>
+                    <li><i class="fas fa-external-link-alt"></i> PM-KISAN</li>
+                    <li><i class="fas fa-external-link-alt"></i> e-NAM</li>
+                    <li><i class="fas fa-external-link-alt"></i> Digital India</li>
+                    <li><i class="fas fa-external-link-alt"></i> MyGov</li>
+                </ul>
+            </div>
+            <div>
+                <h4>हमसे जुड़ें</h4>
+                <div class="helpline">
+                    <i class="fas fa-phone-alt"></i> 1800-XXX-XXXX
+                </div>
+                <ul style="margin-top:10px;">
+                    <li><i class="fas fa-envelope"></i> support@phasalsahaayak.in</li>
+                    <li><i class="fab fa-whatsapp"></i> WhatsApp: 98765-43210</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>⚠️ यह एक स्वतंत्र कृषि सहायक मंच है | सभी डेटा सरकारी स्रोतों से लिया गया है</p>
+            <p style="margin-top:6px;">© 2026 Phasal Sahaayak · Crop Helper · All Rights Reserved</p>
+        </div>
+    </footer>
+
+</div>
+
+<!-- ===== BOTTOM NAV (Mobile) ===== -->
+<div class="bottom-nav">
+    <a href="#" class="active"><i class="fas fa-home"></i> होम</a>
+    <a href="#mandi"><i class="fas fa-chart-line"></i> मंडी</a>
+    <a href="#crop-doctor"><i class="fas fa-robot"></i> डॉक्टर</a>
+    <a href="#schemes"><i class="fas fa-gavel"></i> योजनाएं</a>
+    <a href="#" onclick="alert('📱 App download link coming soon!')"><i class="fas fa-download"></i> ऐप</a>
+</div>
+
+<!-- ===== JAVASCRIPT ===== -->
+<script>
+    // ===== LANGUAGE SWITCH =====
+    function changeLanguage(lang) {
+        document.querySelectorAll('.lang-btn').forEach(btn => {
+            btn.classList.remove('active');
+            if (btn.textContent.toLowerCase() === lang || btn.textContent.toLowerCase() === (lang === 'hi' ? 'हिंदी' : 'english')) {
+                btn.classList.add('active');
+            }
+        });
+        if (lang === 'hi') {
+            document.querySelector('.hero-content h2').innerHTML = 'आपकी फसल का <span class="highlight">सच्चा साथी</span>';
+            document.querySelector('.hero-content p').textContent = 'मौसम, मंडी भाव, फसल रोग और सरकारी योजनाओं की रियल-टाइम जानकारी अब आपके मोबाइल पर';
+            document.querySelector('.section-title').innerHTML = '<i class="fas fa-th-large"></i> मुख्य सेवाएँ';
+            document.getElementById('noticeText').textContent = 'नई घोषणा: PM-KISAN 18वीं किस्त जारी | 3,000+ किसान लाभान्वित';
+            document.querySelector('.footer-bottom p:first-child').textContent = '⚠️ यह एक स्वतंत्र कृषि सहायक मंच है | सभी डेटा सरकारी स्रोतों से लिया गया है';
+        } else {
+            document.querySelector('.hero-content h2').innerHTML = 'Your Crop\'s <span class="highlight">True Companion</span>';
+            document.querySelector('.hero-content p').textContent = 'Real-time weather, mandi rates, crop disease diagnosis, and government schemes on your mobile';
+            document.querySelector('.section-title').innerHTML = '<i class="fas fa-th-large"></i> Main Services';
+            document.getElementById('noticeText').textContent = 'New Alert: PM-KISAN 18th installment released | 3,000+ farmers benefited';
+            document.querySelector('.footer-bottom p:first-child').textContent = '⚠️ This is an independent agricultural assistance platform | All data from government sources';
+        }
+    }
+
+    // ===== CROP DOCTOR - FILE UPLOAD =====
+    function handleFileUpload(event) {
+        const file = event.target.files[0];
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const resultDiv = document.getElementById('diagnosisResult');
+            const textDiv = document.getElementById('diagnosisText');
+            resultDiv.classList.add('show');
+            textDiv.innerHTML = `
+                <strong>✅ रोग:</strong> लीफ ब्लाइट (Leaf Blight)<br>
+                <strong>💊 अनुशंसित:</strong> कॉपर ऑक्सीक्लोराइड 3 ग्राम/लीटर<br>
+                <strong>⏱️ विश्लेषण समय:</strong> 2.4 सेकंड
+            `;
+            document.querySelector('.upload-area p').textContent = '📸 ' + file.name + ' (Uploaded Successfully)';
+            document.querySelector('.upload-area i').className = 'fas fa-check-circle';
+            document.querySelector('.upload-area i').style.color = '#27ae60';
+            alert('🧪 AI Diagnosis Complete! Scroll down to see the result.');
+        };
+        reader.readAsDataURL(file);
+    }
+
+    // ===== DRAG & DROP UPLOAD =====
+    const uploadArea = document.getElementById('uploadArea');
+    uploadArea.addEventListener('dragover', function(e) {
+        e.preventDefault();
+        this.style.borderColor = '#F4B41A';
+        this.style.background = '#fefcf5';
+    });
+    uploadArea.addEventListener('dragleave', function(e) {
+        this.style.borderColor = '#bdc3c7';
+        this.style.background = '#fafcfb';
+    });
+    uploadArea.addEventListener('drop', function(e) {
+        e.preventDefault();
+        this.style.borderColor = '#bdc3c7';
+        this.style.background = '#fafcfb';
+        const files = e.dataTransfer.files;
+        if (files.length > 0) {
+            document.getElementById('fileInput').files = files;
+            handleFileUpload({ target: { files: files } });
+        }
+    });
+
+    // ===== LIVE MANDI PRICE UPDATE (Simulation) =====
+    function updateMandiPrices() {
+        const rows = document.querySelectorAll('#mandiTable tr');
+        const changes = ['+1.2%', '-0.5%', '+2.1%', '-0.3%', '+1.7%'];
+        const upDown = ['price-up', 'price-down', 'price-up', 'price-down', 'price-up'];
+        rows.forEach((row, index) => {
+            const changeCell = row.querySelector('td:last-child');
+            if (changeCell) {
+                const arrow = upDown[index % upDown.length] === 'price-up' ? 'fa-arrow-up' : 'fa-arrow-down';
+                changeCell.className = upDown[index % upDown.length];
+                changeCell.innerHTML = `<i class="fas ${arrow}"></i> ${changes[index % changes.length]}`;
+            }
+        });
+    }
+
+    setInterval(updateMandiPrices, 10000);
+
+    // ===== NOTICE BOARD ROTATION =====
+    const notices = [
+        '🌾 नई घोषणा: PM-KISAN 18वीं किस्त जारी | 3,000+ किसान लाभान्वित',
+        '🌤️ मौसम अपडेट: अगले 3 दिन वर्षा की संभावना | बारिश के लिए तैयार रहें',
+        '💰 मंडी भाव: गेहूं के दामों में बढ़ोतरी | आज ₹2,480 प्रति क्विंटल',
+        '📜 सरकारी योजना: फसल बीमा की आखिरी तारीख 31 अगस्त',
+        '🧑‍🔬 कृषि सलाह: गेहूं की फसल में नीम की खाद डालें'
+    ];
+
+    let noticeIndex = 0;
+    setInterval(() => {
+        noticeIndex = (noticeIndex + 1) % notices.length;
+        const noticeText = document.getElementById('noticeText');
+        if (noticeText) {
+            noticeText.textContent = notices[noticeIndex];
+        }
+    }, 5000);
+
+    console.log('🌾 Phasal Sahaayak (Crop Helper) v2.0');
+    console.log('📱 20+ Stock Images Integrated');
+    console.log('❤️ Made with love for Indian Farmers');
+</script>
+
+</body>
+</html>
